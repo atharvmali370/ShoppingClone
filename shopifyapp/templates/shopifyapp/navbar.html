@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Shopify</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'shopify:home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Category
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'shopify:electronics-product' %}">Electronics</a>
+          <a class="dropdown-item" href="{% url 'shopify:cloths-product' %}">Cloths</a>
+          <a class="dropdown-item" href="{% url 'shopify:home-appliances-product' %}">Home Appliances</a>
+        </div>
+      </li>
+
+      {% if user.is_authenticated %}
+
+      <li class="nav-item active">
+        <form action="{% url 'userapp:logout' %}" method="post">{% csrf_token %}
+          <button type="submit" class="btn btn-link nav-link">Logout</button>
+        </form>
+      </li>
+
+      {% else %}
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Register
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'userapp:register' 'seller' %}">SELLER</a>
+          <a class="dropdown-item" href="{% url 'userapp:register' 'buyer' %}">BUYER</a>
+        </div>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'userapp:login' %}">Login <span class="sr-only">(current)</span></a>
+      </li>
+
+      {% endif %}
+
+
+      {% if user.is_authenticated %}      
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'shopify:user-product' user.id %}"> User :- {{user.username}} <span class="sr-only">(current)</span></a>
+      </li>
+      {% endif %}
+
+    </ul>
+
+
+      <a class="nav-link" href="{% url 'shopify:view-cart' %}"> Cart <span class="sr-only">(current)</span></a> &nbsp;
+
+
+    <form action="{% url 'shopify:search-product' %}" class="form-inline my-2 my-lg-0" method="post">{% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>

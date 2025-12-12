@@ -1,0 +1,36 @@
+{% extends 'shopifyapp/base.html' %}
+{% load static %}
+
+{% block head %}
+
+<title>shopifyapp-add-category</title>
+
+{% endblock %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+{% if user.is_seller %}
+
+<h1>Add Category Here</h1>
+
+<form action="" method="POST"> {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" name="cname" aria-describedby="emailHelp" >
+    </div>
+
+    <button type="submit" class="btn btn-primary"> Add Product </button>
+</form>
+
+{% endif %}
+{% if not user.is_seller %}
+
+<h1>You do not have seller permissions. Please register or switch to a seller account to add products.</h1>
+<a href="{% url 'shopify:home' %}" class="btn btn-secondary">Back</a>
+
+{% endif %}
+{% endif %}
+
+
+{% endblock %}

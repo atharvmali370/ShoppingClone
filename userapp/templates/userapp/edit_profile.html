@@ -1,0 +1,17 @@
+{% extends "shopifyapp/base.html" %}
+
+{% block head %}
+
+    <title>Edit Profile</title>
+
+{% endblock %}
+
+{% block body %}
+<h2>Edit Profile</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{% url 'shopify:home' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

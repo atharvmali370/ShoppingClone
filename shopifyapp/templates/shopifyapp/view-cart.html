@@ -1,0 +1,49 @@
+{% extends 'shopifyapp/base.html' %}
+{% load static %}
+
+{% block head %}
+
+<title>shopifyapp-View-Cart</title>
+
+{% endblock %}
+
+
+{% block body %}
+<br>
+
+{% for item in cart_items %}
+
+    <h5>{{ item.product.name }}</h5>
+    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" height="120" width="120">
+
+    <p>
+        Price: ₹{{ item.product.selling_price }} <br>
+        Quantity:
+
+    <!-- Decrease button -->
+    <form method="post" action="{% url 'shopify:update-cart-item' item.id %}" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="decrease">
+        <button type="submit" >-</button>
+    </form>
+
+    {{ item.quantity }}
+
+    <!-- Increase button -->
+    <form method="post" action="{% url 'shopify:update-cart-item' item.id %}" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="increase">
+        <button type="submit" >+</button>
+    </form>
+    </p>
+
+    <p>Item Total: ₹{{ item.get_total_item_price }}</p>
+
+{% endfor %}
+
+<div class="alert alert-info mt-3">
+    <h4>Total Cart Price: ₹{{ cart.get_total_cart_price }}</h4>
+</div>
+
+
+{% endblock %}

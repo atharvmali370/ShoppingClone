@@ -1,0 +1,43 @@
+{% extends 'shopifyapp/base.html' %}
+{% load static %}
+
+{% block head %}
+
+<title>shopifyapp-edit-product</title>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Edit Product Here</h1>
+
+<form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" value="{{ product.name }}" name="pname" aria-describedby="emailHelp">
+    </div>
+
+    <div class="form-group">
+        <label for="Discription">Discription</label>
+        <input type="text" class="form-control" value="{{ product.discription }}" name="discription">
+    </div>
+
+    <div class="form-group">
+        <label for="Discription">Original Price</label>
+        <input type="text" class="form-control" value="{{ product.original_price }}" name="oprice">
+    </div>
+
+    <div class="form-group">
+        <label for="Discription">Discount Percentage</label>
+        <input type="text" class="form-control" value="{{ product.discount_percentage }}" name="dprice">
+    </div>
+
+    <div class="form-group">
+        <label for="Discription">Image</label>
+        <input type="file" class="form-control" value="{{ product.image }}" name="image">
+    </div>
+
+    <button type="submit" class="btn btn-primary"> Edit Product </button>
+</form>
+
+{% endblock %}

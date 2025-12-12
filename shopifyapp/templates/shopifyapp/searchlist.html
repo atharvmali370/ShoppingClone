@@ -1,0 +1,121 @@
+{% extends 'shopifyapp/base.html' %}
+{% load static %}
+
+{% block head %}
+
+<title>shopifyapp-search</title>
+
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-1g {
+            font-size: 3.5rem;
+        }
+    }
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+    {% if user.is_seller %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Shopify</h1>
+            <p class="lead text-muted">Skills It Academy Created It's Shopping Website For Student To Purchese The Java
+                | Python | DS Related Stuff !!</p>
+            <p>
+                <a href="{% url 'shopify:create-product' %}" class="btn btn-primary my-2">Add Product</a>
+                <a href="{% url 'shopify:create-category' %}" class="btn btn-secondary my-2">Add Product Category</a>
+            </p>
+        </div>
+    </section>
+    {% else %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Shopify</h1>
+            <p class="lead text-muted">Skills It Academy Created It's Shopping Website For Student To Purchese The Java
+                | Python | DS Related Stuff !!</p>
+        </div>
+    </section>
+    {% endif %}
+    {% else %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Shopify</h1>
+            <p class="lead text-muted">Skills It Academy Created It's Shopping Website For Student To Purchese The Java
+                | Python | DS Related Stuff !!</p>
+        </div>
+    </section>
+    {% endif %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+
+                {% for product in search_list %}
+
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img class="bd-placeholder-img card-img-top" src="{{ product.image.url }}" alt="Thumbnail"
+                            width="100%" height="225">
+
+                        <div class="card-body">
+                            <h3>{{ product.name }}</h3>
+                            <hr>
+                            <p> Original Price ₹ : {{ product.original_price }}</p>
+                            <p style="color: red;"> Discount Percentage : {{ product.discount_percentage }} %</p>
+                            <p> <b> Selling Price ₹ : {{ product.selling_price }} </b></p>
+                            <hr>
+                            <p class="card-text"> {{ product.discription | truncatechars:20 }} <a
+                                    href="{% url 'shopify:view-product' product.id %}">more</a> </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{% url 'shopify:home' %}" class="btn btn-sm btn-outline-success"> Back </a>
+                                    &nbsp;
+                                    {% if user.is_authenticated %}
+                                    {% if user.id == product.user.id %}
+                                    {% if user.is_seller %}
+                                    <a href="{% url 'shopify:edit-product' product.id %}"
+                                        class="btn btn-sm btn-outline-warning"> Edit </a> &nbsp;
+                                    <a href="{% url 'shopify:delete-product' product.id %}"
+                                        class="btn btn-sm btn-outline-danger"> Delete </a> &nbsp;
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+                                <small class="text-muted">9 mins</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>©SkillsITAcademy | SkillsShopifyApp | SanyuInfotechPvt.Ltd</p>
+    </div>
+</footer>
+
+{% endblock %}

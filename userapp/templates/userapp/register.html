@@ -1,0 +1,21 @@
+{% extends 'shopifyapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+
+    <title>Register</title>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+   <h1>User Register Page</h1>
+
+   <form action="" method="post">{% csrf_token %}
+         {{ form | crispy }}
+         <center><button type="submit" class="btn btn-primary">Register</button></center>
+   </form>
+
+{% endblock %}

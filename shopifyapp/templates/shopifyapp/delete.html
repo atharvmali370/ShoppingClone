@@ -1,0 +1,22 @@
+{% extends 'shopifyapp/base.html' %}
+
+{% block head %}
+
+<title>Delete</title>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+    <h1>Are You Sure That You Want To Delete This Product :: {{product.name}} ???</h1>
+
+    <form action="" method="post">{% csrf_token %}
+        <input type="hidden" name="id" value="{{ product.id }}">
+        <button type="submit" class="btn btn-danger">Yes I'm Sure</button>
+        <a href="{% url 'shopify:home' %}" class="btn btn-secondary">Cancel</a>
+
+    </form>
+
+{% endblock %}
